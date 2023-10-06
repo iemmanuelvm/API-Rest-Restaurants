@@ -138,6 +138,8 @@ class Restaurant(MethodView):
             if distance <= radius:
                 restaurants_within_radius.append(restaurant.rating)
 
-        count, avg, std = GetStatiticsFromRestaurants(restaurants_within_radius)
-
-        return {"count": count, "avg": avg, "std": std}, 200
+        if(len(restaurants_within_radius)!=0):
+            count, avg, std = GetStatiticsFromRestaurants(restaurants_within_radius)
+            return {"count": count, "avg": avg, "std": std}, 200
+        else:
+            return {"count": 0, "avg": 0, "std": 0}, 200
