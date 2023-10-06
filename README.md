@@ -24,6 +24,11 @@ To run the application from the container, follow these steps:
     http://127.0.0.1:5000/restaurants
 
 5. Endpoints
+
+   - `GET` Documentation:
+     ```shell
+     http://127.0.0.1:5000/swagger-ui
+     ```
    
    - `GET` Request to fetch restaurants:
      ```shell
