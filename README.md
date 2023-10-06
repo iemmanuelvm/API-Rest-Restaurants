@@ -1,5 +1,7 @@
 ## TEST BACK END DEVELOPER
 
+This is a project that implements a REST API with CRUD operations for the 'restaurants' table, along with basic statistical data retrieval capabilities.
+
 ### Documentation
 
 To run the application from the container, follow these steps:
