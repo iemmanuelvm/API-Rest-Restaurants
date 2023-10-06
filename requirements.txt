@@ -5,3 +5,4 @@ Flask-Migrate
 passlib
 marshmallow
 python-dotenv
+geopy

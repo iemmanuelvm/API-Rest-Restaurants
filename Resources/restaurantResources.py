@@ -1,12 +1,14 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
+from flask import request
 
 import csv, os
 
 from db import db
 from Models import RestaurantModel
 from Schemas import RestaurantSchema, RestaurantUpdateSchema
+from Helpers import PostGISLike, GetStatiticsFromRestaurants
 
 blp = Blueprint("Restaurants", "restaurants", description="Operations on restaurants")
 
@@ -15,6 +17,14 @@ class RestaurantList(MethodView):
     @blp.response(200, RestaurantSchema(many=True))
     def get(self):
         return RestaurantModel.query.all()
+    
+    @blp.response(204)
+    def delete(self):
+        # Delete all restaurants
+        RestaurantModel.query.delete()
+        db.session.commit()
+        return {"message": "Restaurants deleted"}, 204
+
     @blp.arguments(RestaurantSchema)
     @blp.response(201, RestaurantSchema)
     def post(self, restaurant_data):
@@ -76,6 +86,7 @@ class Restaurant(MethodView):
     # @blp.response(200, RestaurantSchema)
     def post(self):
         script_directory = os.path.dirname(os.path.abspath(__file__))
+        # todo cambiar el file
         data_file_path = os.path.join(script_directory, '..', 'Data', 'restaurantes.csv')
 
         try:
@@ -109,3 +120,24 @@ class Restaurant(MethodView):
         
         return {"message": "SEED EXECUTED"}, 200
     
+@blp.route("/restaurants/statistics")
+class Restaurant(MethodView):
+    def get(self):
+        if 'latitude' not in request.args or 'longitude' not in request.args or 'radius' not in request.args:
+            return {"error": "Missing one or more required parameters"}, 400
+
+        latitude = float(request.args['latitude'])
+        longitude = float(request.args['longitude'])
+        radius = float(request.args['radius'])
+
+        restaurants = RestaurantModel.query.all()
+        restaurants_within_radius = []
+
+        for restaurant in restaurants:
+            distance = PostGISLike(latitude, longitude, restaurant.lat, restaurant.lng)
+            if distance <= radius:
+                restaurants_within_radius.append(restaurant.rating)
+
+        count, avg, std = GetStatiticsFromRestaurants(restaurants_within_radius)
+
+        return {"count": count, "avg": avg, "std": std}, 200
