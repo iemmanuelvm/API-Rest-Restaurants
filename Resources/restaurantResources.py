@@ -142,4 +142,4 @@ class Restaurant(MethodView):
             count, avg, std = GetStatiticsFromRestaurants(restaurants_within_radius)
             return {"count": count, "avg": avg, "std": std}, 200
         else:
-            return {"count": 0, "avg": 0, "std": 0}, 200
+            return {"message": "No restaurants were found in this area"}, 404
