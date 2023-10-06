@@ -18,12 +18,12 @@ class RestaurantList(MethodView):
     def get(self):
         return RestaurantModel.query.all()
     
-    @blp.response(204)
+    @blp.response(200)
     def delete(self):
         # Delete all restaurants
         RestaurantModel.query.delete()
         db.session.commit()
-        return {"message": "Restaurants deleted"}, 204
+        return {"message": "Restaurants deleted"}, 200
 
     @blp.arguments(RestaurantSchema)
     @blp.response(201, RestaurantSchema)
