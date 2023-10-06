@@ -23,33 +23,52 @@ To run the application from the container, follow these steps:
    ```shell
     http://127.0.0.1:5000/restaurants
 
-5. Endpoints
+5. Endpoints Dev and Prod
 
    - `GET` Documentation:
      ```shell
      http://127.0.0.1:5000/swagger-ui
+     ```
+     ```shell
+     https://test-back-end-developer.onrender.com/swagger-ui
      ```
    
    - `GET` Request to fetch restaurants:
      ```shell
      http://127.0.0.1:5000/restaurants
      ```
+     ```shell
+     https://test-back-end-developer.onrender.com/restaurants
+     ```
 
    - `POST` Request to add a new restaurant:
      ```shell
      http://127.0.0.1:5000/restaurants
+     ```
+     ```shell
+     https://test-back-end-developer.onrender.com/restaurants
      ```
 
    - `PUT` Request to update a restaurant:
      ```shell
      http://127.0.0.1:5000/restaurants/<restaurant_id>
      ```
+     ```shell
+     https://test-back-end-developer.onrender.com/<restaurant_id>
+     ```
 
    - `DELETE` Request to delete a restaurant:
      ```shell
      http://127.0.0.1:5000/restaurants/<restaurant_id>
      ```
+      ```shell
+     https://test-back-end-developer.onrender.com/<restaurant_id>
+     ```
 
    - `STATISTICS` Request to get a statistics:
      ```shell
      http://127.0.0.1:5000/restaurants/statistics?latitude=<your_latitude>&longitude=<your_longitude>&radius=<your_radius>
+     ```
+     ```shell
+     https://test-back-end-developer.onrender.com/restaurants/statistics?latitude=<your_latitude>&longitude=<your_longitude>&radius=<your_radius>
+     ```
