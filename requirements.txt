@@ -6,4 +6,3 @@ passlib
 marshmallow
 python-dotenv
 gunicorn
-psycopg2==2.9.1
